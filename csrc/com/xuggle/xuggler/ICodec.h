@@ -473,7 +473,7 @@ public:
     AV_CODEC_ID_DVB_TELETEXT,
     AV_CODEC_ID_SRT,
     AV_CODEC_ID_MICRODVD   = MKBETAG('m','D','V','D'),
-    AV_CODEC_ID_EIA_608    = MKBETAG('c','6','0','8'),
+    AV_CODEC_ID_EIA_608    = MKBETAG('c','6',0x30,'8'),
     AV_CODEC_ID_JACOSUB    = MKBETAG('J','S','U','B'),
     AV_CODEC_ID_SAMI       = MKBETAG('S','A','M','I'),
     AV_CODEC_ID_REALTEXT   = MKBETAG('R','T','X','T'),

@@ -226,7 +226,7 @@ static SwsContext *xuggleSws_getContext(int srcW, int srcH, enum PixelFormat src
           int32_t outputWidth, int32_t outputHeight,
           IPixelFormat::Type outputFmt,
           int32_t inputWidth, int32_t inputHeight,
-          IPixelFormat::Type inputFmt)
+          IPixelFormat::Type inputFmt, int32_t flags)
   {
     VideoResampler* retval = 0;
     try
@@ -254,14 +254,14 @@ static SwsContext *xuggleSws_getContext(int srcW, int srcH, enum PixelFormat src
         retval->mIHeight = inputHeight;
         retval->mIWidth = inputWidth;
         retval->mIPixelFmt = inputFmt;
-        
-        int32_t flags = 0;
-        if (inputWidth < outputWidth)
-          // We're upscaling
-          flags = SWS_BICUBIC;
-        else
-          // We're downscaling
-          flags = SWS_AREA;
+        if (flags == 0) { 
+          if (inputWidth < outputWidth)
+            // We're upscaling
+            flags = SWS_BICUBIC;
+          else
+            // We're downscaling
+            flags = SWS_AREA;
+	}
         
         retval->mContext = xuggleSws_getContext(
             retval->mIWidth, // src width

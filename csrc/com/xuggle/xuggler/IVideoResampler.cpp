@@ -38,11 +38,12 @@ namespace com { namespace xuggle { namespace xuggler
       int32_t outputWidth, int32_t outputHeight,
       IPixelFormat::Type outputFmt,
       int32_t inputWidth, int32_t inputHeight,
-      IPixelFormat::Type inputFmt)
+      IPixelFormat::Type inputFmt,
+      int32_t flags)
   {
     Global::init();
     return VideoResampler::make(outputWidth, outputHeight, outputFmt,
-        inputWidth, inputHeight, inputFmt);
+        inputWidth, inputHeight, inputFmt, flags);
   }
 
   bool

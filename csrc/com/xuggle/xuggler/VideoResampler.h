@@ -71,7 +71,8 @@ namespace com { namespace xuggle { namespace xuggler
         int32_t outputWidth, int32_t outputHeight,
         IPixelFormat::Type outputFmt,
         int32_t inputWidth, int32_t inputHeight,
-        IPixelFormat::Type inputFmt);
+        IPixelFormat::Type inputFmt,
+	int32_t flags = 0);
     virtual int32_t setProperty(IMetaData* valuesToSet, IMetaData* valuesNotFound);
   protected:
     VideoResampler();

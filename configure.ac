@@ -134,7 +134,7 @@ AC_ARG_ENABLE([swig],
               [AS_HELP_STRING([--enable-swig],
                               [use swig to regenerate java interfaces (default is no)])],
                               [],
-                              [enable_swig=no])
+                              [enable_swig=yes])
 AC_MSG_CHECKING([whether to regnerate java interfaces from swig])
 AC_MSG_RESULT([$enable_swig])
 

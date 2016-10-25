@@ -71,7 +71,7 @@
     {
       ICodec.ID id = getOutputCodecID(i);
       // remove duplicate IDs
-      if (id != ICodec.ID.CODEC_ID_NONE && !uniqueSet.contains(id))
+      if (id != ICodec.ID.AV_CODEC_ID_NONE && !uniqueSet.contains(id))
         retval.add(id);
       uniqueSet.add(id);
     }    
@@ -104,7 +104,7 @@
       int tag = getOutputCodecTag(i);
       ICodec.ID id = getOutputCodecID(i);
       // remove duplicate tags
-      if (id != ICodec.ID.CODEC_ID_NONE && !uniqueSet.contains(tag))
+      if (id != ICodec.ID.AV_CODEC_ID_NONE && !uniqueSet.contains(tag))
         retval.add(tag);
       uniqueSet.add(tag);
     }    
@@ -188,7 +188,7 @@
     ICodec codec = null;
     try
     {
-      if (inputCodecId == null || inputCodecId == ICodec.ID.CODEC_ID_NONE)
+      if (inputCodecId == null || inputCodecId == ICodec.ID.AV_CODEC_ID_NONE)
         throw new IllegalArgumentException("null inputCodecId");
       
       codec = ICodec.findDecodingCodec(inputCodecId);
@@ -262,7 +262,7 @@
    * @return the best guess output codec ID
    * 
    * @throws IllegalArgumentException if inputCodecId is null
-   *   or equal to {@link ICodec.ID#CODEC_ID_NONE}, or 
+   *   or equal to {@link ICodec.ID#AV_CODEC_ID_NONE}, or 
    *   {@link #isOutput()} is false.
    * @throws UnsupportedOperationException if we cannot establish
    *   a codec.
@@ -283,7 +283,7 @@
         throw new IllegalArgumentException(
             "passed output container format, actally an input container format");
 
-      if (inputCodecId != null && inputCodecId != ICodec.ID.CODEC_ID_NONE)
+      if (inputCodecId != null && inputCodecId != ICodec.ID.AV_CODEC_ID_NONE)
       {
         inputCodec = ICodec.findDecodingCodec(inputCodecId);
         if (inputCodec == null)
@@ -312,7 +312,7 @@
           outputCodecId = this.getOutputDefaultSubtitleCodec();
           break;
       }
-      if (outputCodecId != null && outputCodecId != ICodec.ID.CODEC_ID_NONE)
+      if (outputCodecId != null && outputCodecId != ICodec.ID.AV_CODEC_ID_NONE)
       {
         codec = ICodec.findEncodingCodec(outputCodecId);
       }
@@ -347,7 +347,7 @@
           }
         }
       }
-      if (outputCodecId == null || outputCodecId == ICodec.ID.CODEC_ID_NONE)
+      if (outputCodecId == null || outputCodecId == ICodec.ID.AV_CODEC_ID_NONE)
         throw new UnsupportedOperationException("could not guess codec");
       return outputCodecId;
     }
