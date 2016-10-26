@@ -244,9 +244,10 @@
       <mapping conf="compile" scope="compile"/>
       <mapping conf="default" scope="runtime"/>
       <mapping conf="test" scope="test"/>
+      <mapping conf="sources" scope="sources"/>
     </ivy:makepom>
     <ivy:publish
-        conf="default"
+        conf="default,sources"
         update="true"
         replacedynamicrev="true"
         forcedeliver="false"
@@ -254,19 +255,17 @@
         overwrite="true"
         pubrevision="${ivy.deliver.revision}"
         resolver="local-m2-publish">
-      <artifacts pattern="${dist.dir}/war/[artifact].war" />
-      <artifacts pattern="${dist.dir}/lib/[artifact].[ext]" />
+      <artifacts pattern="${dist.dir}/lib/[artifact](-[classifier]).[ext]" />
     </ivy:publish>
     <ivy:publish
-        conf="default"
+        conf="default,sources"
         update="true"
         replacedynamicrev="true"
         forcedeliver="false"
         publishivy="true"
         overwrite="true"
         resolver="share-m2">
-      <artifacts pattern="${dist.dir}/war/[artifact].war" />
-      <artifacts pattern="${dist.dir}/lib/[artifact].[ext]" />
+      <artifacts pattern="${dist.dir}/lib/[artifact](-[classifier]).[ext]" />
     </ivy:publish>
   </target>
 
@@ -423,6 +422,12 @@
       </not>
     </condition>
     <echo message="Ivy Library Version: ${ivy.deliver.revision}"/>
+
+    <condition property="native.os" value="${native.jars}">
+      <not>
+        <isset property="native.os"/>
+      </not>
+    </condition>
   </target>
   <target name="init" depends="os-init, java6.check, revision, ivy-init" >
     <!-- determine if we have a native components -->
@@ -580,8 +585,7 @@
             <fileset dir="${dist.dir}/lib">
               <include name="**/*.jar"/>
               <exclude name="${app.name}.jar"/>
-              <exclude name="${app.name}-noarch.jar"/>
-              <exclude name="${app.name}-arch-*.jar"/>
+              <exclude name="${app.name}-*.jar"/>
             </fileset>
           </classpath>
         </manifestclasspath>
@@ -590,7 +594,7 @@
     <if>
       <isset property="native.configure.exists"/>
       <then>
-        <jar jarfile="${dist.dir}/lib/${app.name}-noarch.jar"
+        <jar jarfile="${dist.dir}/lib/${app.name}.jar"
             index="no"
             includes="**/*"
             excludes="**/*.dylib,**/*.so,**/*.dll"
@@ -607,13 +611,13 @@
         <echo>Generating native jars for: ${native.jars}</echo>
         <for list="${native.jars}" param="native.os" delimiter=";">
         <sequential>
-        <jar jarfile="${dist.dir}/lib/${app.name}-arch-@{native.os}.jar"
+        <jar jarfile="${dist.dir}/lib/${app.name}-@{native.os}.jar"
             index="no"
             basedir="${classes.dir}${app.nativeclasspath}/@{native.os}">
           <include name="**/*"/>
           <manifest>
             <attribute name="Implementation-Vendor" value="www.xuggle.com"/>
-            <attribute name="Implementation-Title" value="${app.name}-arch-@{native.os}"/>
+            <attribute name="Implementation-Title" value="${app.name}-@{native.os}"/>
             <attribute name="Implementation-Version" value="${library.version}"/>
             <attribute name="Xuggle-Native-App" value="${app.name}" />
             <attribute name="Xuggle-Native-Root" value="." />
@@ -621,30 +625,36 @@
             <attribute name="Xuggle-Native-Bundles" value="@{native.os}" />
           </manifest>
         </jar>
+        <jar jarfile="${dist.dir}/lib/${app.name}-all-@{native.os}.jar"
+            index="no"
+            basedir="${classes.dir}">
+          <include name="**/*"/>
+          <manifest>
+            <attribute name="Implementation-Vendor" value="www.xuggle.com"/>
+            <attribute name="Implementation-Title" value="${app.name}"/>
+            <attribute name="Implementation-Version" value="${library.version}"/>
+            <attribute name="Class-Path" value="${manifest.classpath}"/>
+            <attribute name="Main-Class" value="${app.mainclass}"/>
+            <!-- the app the native libraries belong to -->
+            <attribute name="Xuggle-Native-App" value="${app.name}" />
+            <!-- where in the classpath the native bundles root is.  If empty the top of the class hierarchy is used  -->
+            <attribute name="Xuggle-Native-Root" value="${app.nativeclasspath}" />
+            <!-- relative to Xuggle-Native-Root, and delimited by ';', each sub-path for each architecture.
+                 if empty, then Xuggle-Native-Root is tried -->
+            <attribute name="Xuggle-Native-Paths" value="${native.jars}" />
+            <!-- a ';' delimited listing of the architectures that are bundles in this jar.  -->
+            <attribute name="Xuggle-Native-Bundles" value="${native.jars}" />
+          </manifest>
+        </jar>
         </sequential>
         </for>
       </then>
     </if>
-    <jar jarfile="${dist.dir}/lib/${app.name}.jar"
+    <echo>Generating sources jar</echo>
+    <jar jarfile="${dist.dir}/lib/${app.name}-sources.jar"
         index="no"
-        basedir="${classes.dir}">
+        basedir="${src.dir}">
       <include name="**/*"/>
-      <manifest>
-        <attribute name="Implementation-Vendor" value="www.xuggle.com"/>
-        <attribute name="Implementation-Title" value="${app.name}"/>
-        <attribute name="Implementation-Version" value="${library.version}"/>
-        <attribute name="Class-Path" value="${manifest.classpath}"/>
-        <attribute name="Main-Class" value="${app.mainclass}"/>
-        <!-- the app the native libraries belong to -->
-        <attribute name="Xuggle-Native-App" value="${app.name}" />
-        <!-- where in the classpath the native bundles root is.  If empty the top of the class hierarchy is used  -->
-        <attribute name="Xuggle-Native-Root" value="${app.nativeclasspath}" />
-        <!-- relative to Xuggle-Native-Root, and delimited by ';', each sub-path for each architecture.
-             if empty, then Xuggle-Native-Root is tried -->
-        <attribute name="Xuggle-Native-Paths" value="${native.jars}" />
-        <!-- a ';' delimited listing of the architectures that are bundles in this jar.  -->
-        <attribute name="Xuggle-Native-Bundles" value="${native.jars}" />
-      </manifest>
     </jar>
     <if>
       <!-- Check if a Proguard obsfucation instruction set exists -->
