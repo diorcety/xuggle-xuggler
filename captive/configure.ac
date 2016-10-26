@@ -146,7 +146,7 @@ AC_ARG_ENABLE([gpl],
               [AS_HELP_STRING([--enable-gpl],
                               [whether to enable GPL V3 dependent code (defaults to yes)])],
                               [],
-                              [enable_gpl=yes])
+                              [enable_gpl=no])
 VS_ENABLE_GPL=$enable_gpl
 AC_MSG_RESULT([$enable_gpl])
 if test "x$VS_ENABLE_GPL" = "xyes"; then
