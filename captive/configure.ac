@@ -217,3 +217,6 @@ AC_CONFIG_FILES([Makefile
                  ffmpeg/uninstall.sh
                  ])
 AC_OUTPUT
+
+AC_CONFIG_SUBDIRS([librtmp/csrc])
+AC_CONFIG_SUBDIRS([libopus/csrc])
