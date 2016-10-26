@@ -4,10 +4,9 @@
 AR=${AR:-ar}
 LIBDIR="$1"
 shift;
-export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${LIBDIR}/pkgconfig"
 
 # first get all the libraries
-LIBS=$( pkg-config --libs-only-l $@ )
+LIBS=$( PKG_CONFIG_PATH="${LIBDIR}/pkgconfig" pkg-config --libs-only-l $@ )
 
 for l in ${LIBS}; do
   # strip the -l

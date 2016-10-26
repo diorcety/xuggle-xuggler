@@ -3119,7 +3119,7 @@ fi
 
 exesuf() {
     case $1 in
-        mingw32*|win32|win64|cygwin*|*-dos|freedos|opendos|os/2*|symbian) echo .exe ;;
+        mingw32*|mingw64*|win32|win64|cygwin*|*-dos|freedos|opendos|os/2*|symbian) echo .exe ;;
     esac
 }
 
@@ -4085,7 +4085,7 @@ case $target_os in
         enabled_any pic shared x86_64 ||
             { check_cflags -mdynamic-no-pic && add_asflags -mdynamic-no-pic; }
         ;;
-    mingw32*)
+    mingw32*|mingw64*)
         if test $target_os = "mingw32ce"; then
             disable network
         else
@@ -5007,7 +5007,7 @@ enabled opengl            && { check_lib GL/glx.h glXGetProcAddress "-lGL" ||
                              }
 enabled openssl           && { check_lib openssl/ssl.h SSL_library_init -lssl -lcrypto -ldl ||
                                check_lib openssl/ssl.h SSL_library_init -lssl32 -leay32 -ldl ||
-                               check_lib openssl/ssl.h SSL_library_init -lssl -lcrypto -lws2_32 -lgdi32 -ldl ||
+                               check_lib openssl/ssl.h SSL_library_init -lssl -lcrypto -lws2_32 -lgdi32 ||
                                die "ERROR: openssl not found"; }
 enabled qtkit_indev      && { check_header_oc QTKit/QTKit.h || disable qtkit_indev; }
 

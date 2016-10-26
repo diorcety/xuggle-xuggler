@@ -158,6 +158,7 @@ HOST_OS=$host
 case $host in
   *mingw*|*cygwin*)
   HOST_TYPE=Windows
+  VS_LDFLAGS+="-Wl,-Bstatic"
   ;;
   *darwin*)
   HOST_TYPE=Mac
@@ -372,19 +373,6 @@ AC_SUBST([VS_CFLAGS])dnl
 AC_SUBST([VS_CXXFLAGS])dnl
 AC_SUBST([VS_CPPFLAGS])dnl
 AC_SUBST([VS_LDFLAGS])dnl
-
-VS_FIND_STATIC_LIB([stdc++],
-[VS_LIBSTDCXX="-XCClinker ${VS_LIB}"], [VS_LIBSTDCXX="-XCClinker -lstdc++"])
-VS_FIND_STATIC_LIB([gcc],
-[VS_LIBGCC="-XCClinker ${VS_LIB}"], [])
-
-case $host in
-  *mingw*|*cygwin*)
-  # on windows use the shared library; it'll be there. trust me.
-  VS_LIBSTDCXX="-XCClinker -lstdc++"
-  ;;
-esac
-
 AC_SUBST([VS_LIBSTDCXX])
 AC_SUBST([VS_LIBGCC])
 

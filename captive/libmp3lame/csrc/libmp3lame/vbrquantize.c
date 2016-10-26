@@ -77,9 +77,10 @@ struct algo_s {
 #  define VOLATILE
 #endif
 
-#ifndef FORCEINLINE 
-#define FORCEINLINE
+#ifdef FORCEINLINE 
+#undef FORCEINLINE
 #endif
+#define FORCEINLINE
 
 typedef VOLATILE union {
     float   f;

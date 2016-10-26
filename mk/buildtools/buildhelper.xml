@@ -1169,6 +1169,8 @@
     <exec executable="sh"
         dir="${build-native.dir}"
         failonerror="true">
+      <env key="CXX" value="g++ -static-libstdc++ -static-libgcc"/>
+      <env key="CC" value="gcc -static-libgcc"/>
       <env key="CXXFLAGS" value=""/>
       <env key="CFLAGS" value=""/>
       <env key="CPPFLAGS" value=""/>
@@ -1191,6 +1193,7 @@
         dir="${build-native.dir}"
         failonerror="true">
       <arg line="all"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="compile-native"
@@ -1245,6 +1248,7 @@
         dir="${build-native.dir}"
         failonerror="true">
       <arg line="distcheck"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="dist-native-test"
@@ -1279,6 +1283,7 @@
         failonerror="true">
       <env key="DESTDIR" value="${dist.unix.dir}/stage/${xuggle.os}"/>
       <arg line="${build.install.target}"/>
+      <arg line="-j6"/>
     </exec>
     <!-- copy all dynamic libraries to the class path to get bundled into the java jar file made with stage-java -->
     <mkdir dir="${classes.dir}${app.nativeclasspath}/${xuggle.os}" />
@@ -1307,6 +1312,7 @@
         dir="${build-native.dir}/test/csrc"
         failonerror="true">
       <arg line="check"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="run-tests-native"
@@ -1319,6 +1325,7 @@
         dir="${build-native.dir}"
         failonerror="true">
       <arg line="check"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="run-tests-native-all"
@@ -1331,6 +1338,7 @@
         dir="${build-native.dir}/test/csrc"
         failonerror="true">
       <arg line="memcheck"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="run-memcheck-native"
@@ -1343,6 +1351,7 @@
         dir="${build-native.dir}"
         failonerror="true">
       <arg line="doc"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="doc-native"
@@ -1367,11 +1376,13 @@
         dir="${build-native.dir}/csrc"
         failonerror="true">
       <arg line="clean"/>
+      <arg line="-j6"/>
     </exec>
     <exec executable="${build.native.make}"
         dir="${build-native.dir}/test/csrc"
         failonerror="true">
       <arg line="clean"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="clean-native"
@@ -1392,6 +1403,7 @@
         dir="${build-native.dir}"
         failonerror="true">
       <arg line="uninstall"/>
+      <arg line="-j6"/>
     </exec>
   </target>
   <target name="uninstall-native"

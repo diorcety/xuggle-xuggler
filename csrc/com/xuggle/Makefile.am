@@ -40,11 +40,14 @@ libxuggle_la_LDFLAGS+= \
 	-Wl,-Bsymbolic \
 	-Wl,--warn-common \
 	-Wl,--as-needed \
+	-Wl,-Bstatic \
 	-XCClinker -lgcc \
-	-XCClinker -lmingw32 \
 	-XCClinker -lmoldname \
 	-XCClinker -lmingwex \
+	-XCClinker -lmingw32 \
 	-XCClinker -lmsvcrt \
+	-XCClinker -lpthread \
+	-Wl,-Bdynamic \
 	-XCClinker -ladvapi32 \
 	-XCClinker -lshell32 \
 	-XCClinker -luser32 \

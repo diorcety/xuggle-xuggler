@@ -18,15 +18,6 @@ else
 fi
 
 CFLAGS="@CFLAGS@"
-case $HOST_OS in
-  *mingw*|*cygwin*)
-  # on windows we need to disable force inline
-  CFLAGS="-DFORCEINLINE= ${CFLAGS}"
-  ;;
-  *)
-  ;;
-esac
-
 CC="@CC@" \
 CFLAGS="-I@abs_top_builddir@/stage@includedir@ ${CFLAGS}" \
 LD="@LD@" \
