@@ -3,7 +3,7 @@ VS_CPP_PATH=com/xuggle/xuggler
 VS_CPP_PACKAGE=com.xuggle.xuggler
 VS_CPP_NAMESPACE=com::xuggle::xuggler
 VS_TEST=1
-LIBS=-ldl
+LIBS=
 include @top_builddir@/mk/Makefile.global
 SUBDIRS=io
 

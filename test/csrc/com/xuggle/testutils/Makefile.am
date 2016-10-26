@@ -3,7 +3,7 @@ VS_CPP_PATH=com/xuggle/testutils
 VS_CPP_PACKAGE=com.xuggle.testutils
 VS_CPP_NAMESPACE=com::xuggle::testutils
 VS_TEST=1
-LIBS=-ldl
+LIBS=
 include @top_builddir@/mk/Makefile.global
 
 check_PROGRAMS=testutilsTestTrue

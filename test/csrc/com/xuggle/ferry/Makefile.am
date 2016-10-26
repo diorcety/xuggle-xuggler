@@ -3,7 +3,7 @@ VS_CPP_PATH=com/xuggle/ferry
 VS_CPP_PACKAGE=com.xuggle.ferry
 VS_CPP_NAMESPACE=com::xuggle::ferry
 VS_TEST=1
-LIBS=-ldl
+LIBS=
 include @top_builddir@/mk/Makefile.global
 
 check_PROGRAMS=ferryTestLogger ferryTestRefPointer ferryTestMutex  ferryTestBuffer
